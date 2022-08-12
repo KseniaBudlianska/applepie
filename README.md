@@ -11,7 +11,7 @@ The service handles recipes. Recipe has `id`, `name`, list of `ingredients` (out
  * Delete recipe by id (`/recipes/{id}`)
  
 ### Storage
- * RecipeCsvAdapter
+ * [RecipeCsvAdapter](https://github.com/KseniaBudlianska/applepie/blob/main/src/main/kotlin/com/qecodingcamp/applepie/adapter/recipe/RecipeCsvAdapter.kt)
  * RecipeDbAdapter (todo)
  
 ### How to Install and Run the Project
