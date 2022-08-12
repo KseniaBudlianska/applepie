@@ -1,7 +1,7 @@
 ## Recipe Service
 
 ### Description
-The service handles recipes. Recipe has `id`, `name`, lis of `ingredients` (out of scope for now). You can add as many recipes as you want (limitation is on storage side). 
+The service handles recipes. Recipe has `id`, `name`, list of `ingredients` (out of scope for now). You can add as many recipes as you want (limitation is on storage side). 
 
 ### Implemented Functions
  * Create a new recipe (`/recipes`)
