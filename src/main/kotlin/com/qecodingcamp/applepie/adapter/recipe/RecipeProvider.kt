@@ -16,7 +16,7 @@ interface RecipeProvider {
 
     //fun deleteRecipe(recipe: Recipe)
 
-    fun deleteRecipe(id: UUID)
+    fun deleteRecipeById(id: UUID)
 
     fun findRecipesByName(recipeName: String) : List<Recipe?>
 

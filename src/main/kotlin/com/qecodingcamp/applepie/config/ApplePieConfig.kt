@@ -12,6 +12,7 @@ import com.qecodingcamp.applepie.service.hello.HelloService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
+import java.io.File
 
 @Configuration
 open class ApplePieConfig {
@@ -43,9 +44,6 @@ open class ApplePieConfig {
     ) = RecipeService(recipeProvider)
 
     @Bean
-    open fun recipeProvider() = RecipeCsvAdapter()
-
-    @Bean
     @Primary
-    open fun recipeCsvProvider() = RecipeCsvAdapter()
+    open fun recipeCsvProvider() = RecipeCsvAdapter(File("recipeRepo.csv"))
 }

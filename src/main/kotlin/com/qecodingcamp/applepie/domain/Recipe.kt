@@ -4,7 +4,7 @@ import java.util.UUID
 
 data class Recipe(
     val id: UUID,
-    val recipeName: String,
+    val name: String,
     val ingredients: MutableList<Ingredient> = mutableListOf()
 )
 

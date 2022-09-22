@@ -5,9 +5,11 @@ import com.qecodingcamp.applepie.domain.MeasurementUnit
 import com.qecodingcamp.applepie.domain.RecipeCreationDto
 import com.qecodingcamp.applepie.adapter.recipe.RecipeCsvAdapter
 import com.qecodingcamp.applepie.service.RecipeService
+import java.io.File
 
 fun main() {
-    val recipeAdapter = RecipeCsvAdapter()
+    val file = File("recipeRepo.csv")
+    val recipeAdapter = RecipeCsvAdapter(file)
     val service = RecipeService(recipeAdapter)
 
 

@@ -21,6 +21,7 @@ dependencies {
 	testImplementation("org.junit.jupiter:junit-jupiter")
 	implementation(kotlin("stdlib-jdk8"))
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.2")
+	testImplementation("io.mockk:mockk:1.10.0")
 }
 
 tasks.test {

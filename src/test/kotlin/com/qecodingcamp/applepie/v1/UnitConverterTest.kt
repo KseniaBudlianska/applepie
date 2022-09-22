@@ -1,4 +1,4 @@
-package com.qecodingcamp.applepie
+package com.qecodingcamp.applepie.v1
 
 import com.qecodingcamp.applepie.util.UnitConverter
 import org.junit.jupiter.api.Assertions.assertEquals

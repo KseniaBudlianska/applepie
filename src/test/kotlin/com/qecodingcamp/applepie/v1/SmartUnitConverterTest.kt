@@ -1,4 +1,4 @@
-package com.qecodingcamp.applepie
+package com.qecodingcamp.applepie.v1
 
 import com.qecodingcamp.applepie.domain.MassMeasurementUnit
 import com.qecodingcamp.applepie.domain.MeasurementUnit.GRAM

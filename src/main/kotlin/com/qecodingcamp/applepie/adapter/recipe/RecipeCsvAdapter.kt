@@ -8,14 +8,12 @@ import java.util.UUID
 /**
  * Adapter pattern based on Design pattern.
  */
-class RecipeCsvAdapter : RecipeProvider {
-
-    private val file = File("recipeRepo.csv")
+class RecipeCsvAdapter(private val file: File) : RecipeProvider {
 
     override fun createRecipe(recipeCreation: RecipeCreationDto): Recipe {
         val recipe = Recipe(
             id = UUID.randomUUID(),
-            recipeName = recipeCreation.recipeName
+            name = recipeCreation.recipeName
         )
         val recipeLine = convertToLine(recipe)
         file.appendText(recipeLine)
@@ -32,18 +30,19 @@ class RecipeCsvAdapter : RecipeProvider {
         }
     }
 
-    override fun deleteRecipe(recipeId: UUID) {
+    override fun deleteRecipeById(recipeId: UUID) {
         val lines = file.readLines()
         val filteredLines = lines.filter { line ->
             val id = UUID.fromString(line.split(",")[0])
             recipeId != id
         }
-        file.writeText(
-            filteredLines.joinToString(
-                separator = "\n",
-                postfix = "\n"
+        if (filteredLines.isNotEmpty()) {
+            file.writeText(
+                filteredLines.joinToString(separator = "\n", postfix = "\n")
             )
-        )
+        } else {
+            file.writeText("")
+        }
     }
 
     override fun findRecipesByName(recipeName: String): List<Recipe?> {
@@ -69,11 +68,11 @@ class RecipeCsvAdapter : RecipeProvider {
         val (id, name) = line.split(",")
         return Recipe(
             id = UUID.fromString(id),
-            recipeName = name
+            name = name
         )
     }
 
     private fun convertToLine(recipe: Recipe) : String {
-        return "${recipe.id},${recipe.recipeName}\n"
+        return "${recipe.id},${recipe.name}\n"
     }
 }

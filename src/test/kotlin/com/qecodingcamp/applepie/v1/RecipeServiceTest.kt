@@ -1,10 +1,9 @@
-package com.qecodingcamp.applepie
+package com.qecodingcamp.applepie.v1
 
-import com.qecodingcamp.applepie.domain.Ingredient
-import com.qecodingcamp.applepie.domain.MeasurementUnit
 import com.qecodingcamp.applepie.domain.Recipe
 import com.qecodingcamp.applepie.domain.RecipeCreationDto
 import com.qecodingcamp.applepie.service.RecipeService
+import com.qecodingcamp.applepie.v2.adapter.RecipeSpyAdapter
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -42,7 +41,7 @@ class RecipeServiceTest {
         assertTrue(returnedRecipes == recipes)
     }
 
-    @Test
+    /*@Test
     fun updateRecipe() {
         val recipe = Recipe(UUID.randomUUID(),"My recipe 1")
 
@@ -63,13 +62,13 @@ class RecipeServiceTest {
         val updatedRecipe = mockAdapter.updatedRecipe
 
         assertTrue(newRecipe == updatedRecipe)
-    }
+    }*/
 
     @Test
     fun deleteRecipe() {
         val recipe = Recipe(UUID.randomUUID(),"My recipe 1")
 
-        recipeService.deleteRecipe(recipe)
+        recipeService.deleteRecipe(recipe.id)
 
         val deletedRecipe = mockAdapter.deletedRecipe
 
@@ -104,13 +103,13 @@ class RecipeServiceTest {
 
         mockAdapter.foundRecipe = emptyList()
 
-        val recipe = recipeService.findRecipeByName(recipeToBeReturn.recipeName + "!")
+        val recipe = recipeService.findRecipeByName(recipeToBeReturn.name + "!")
 
         assertEquals(emptyList<Recipe>(), recipe)
         assertEquals(mockAdapter.recipeToBeSearched, recipeName + "!")
     }
 
-    @Test
+    /*@Test
     fun addIngredientToRecipe() {
         //Arrange
         val recipeName = "My recipe"
@@ -123,7 +122,7 @@ class RecipeServiceTest {
 
         //Assert
         //Capture which recipe was saved: verify the recipe is updated
-        assertEquals(mockAdapter.updatedRecipe.recipeName, recipeName)
+        assertEquals(mockAdapter.updatedRecipe.name, recipeName)
         assertEquals(mockAdapter.updatedRecipe.ingredients.first(), ingredient)
-    }
+    }*/
 }

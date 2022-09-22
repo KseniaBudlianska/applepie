@@ -28,7 +28,7 @@ class RecipeService(
     }*/
 
     fun deleteRecipe(id: UUID) {
-        recipeAdapter.deleteRecipe(id)
+        recipeAdapter.deleteRecipeById(id)
     }
 
     /*fun deleteRecipe(recipe: Recipe) {

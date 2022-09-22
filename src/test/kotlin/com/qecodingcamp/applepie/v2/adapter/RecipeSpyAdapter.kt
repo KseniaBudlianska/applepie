@@ -1,4 +1,4 @@
-package com.qecodingcamp.applepie
+package com.qecodingcamp.applepie.v2.adapter
 
 import com.qecodingcamp.applepie.adapter.recipe.RecipeProvider
 import com.qecodingcamp.applepie.domain.Recipe
@@ -21,7 +21,7 @@ class RecipeSpyAdapter : RecipeProvider {
         createdRecipe = recipeCreation
         return Recipe(
             id = UUID.randomUUID(),
-            recipeName = recipeCreation.recipeName,
+            name = recipeCreation.recipeName,
             ingredients = recipeCreation.ingredients
         )
     }
@@ -42,7 +42,7 @@ class RecipeSpyAdapter : RecipeProvider {
         deletedRecipe = recipe
     }*/
 
-    override fun deleteRecipe(id: UUID) {
+    override fun deleteRecipeById(id: UUID) {
         deletedRecipeId = id
     }
 
