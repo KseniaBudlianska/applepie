@@ -19,40 +19,15 @@ class RecipeService(
         return recipeAdapter.readRecipes()
     }
 
-    /*fun updateRecipe(recipe: Recipe) {
-        recipeAdapter.updateRecipe(recipe)
-    }*/
-
-    /*fun updateRecipe(oldRecipe: Recipe, newRecipe: Recipe) {
-        recipeAdapter.updateRecipe(oldRecipe, newRecipe)
-    }*/
-
-    fun deleteRecipe(id: UUID) {
+    fun deleteRecipeById(id: UUID) {
         recipeAdapter.deleteRecipeById(id)
     }
-
-    /*fun deleteRecipe(recipe: Recipe) {
-        recipeAdapter.deleteRecipe(recipe)
-    }*/
 
     fun findRecipeByName(recipe: String) : List<Recipe?> {
         return recipeAdapter.findRecipesByName(recipe)
     }
 
-    fun findRecipeById(id: UUID) : Recipe? {
+    fun findRecipesById(id: UUID) : Recipe? {
         return recipeAdapter.findRecipesById(id)
     }
-
-    //FIXME: Duplicated recipe, change to unique id reference for updating
-    /*fun addIngredient(recipeName: String, ingredient: Ingredient) {
-        val oldRecipe = findRecipeByName(recipeName).first()
-        val newRecipe = oldRecipe?.copy() //TODO: fixme here
-        newRecipe?.ingredients?.add(ingredient)
-
-        oldRecipe?.let { old ->
-            newRecipe?.let { new ->
-                updateRecipe(old, new)
-            }
-        }
-    }*/
 }

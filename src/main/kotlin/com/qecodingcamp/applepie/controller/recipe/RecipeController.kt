@@ -35,7 +35,7 @@ class RecipeController(
     fun getRecipeById(
         @RequestParam("id") id: UUID
     ) : Recipe? {
-        return recipeService.findRecipeById(id)
+        return recipeService.findRecipesById(id)
 
         // todo notify that there is no such recipe -> "There is no such recipe with id: '$id'."
     }
@@ -52,7 +52,7 @@ class RecipeController(
     fun deleteRecipe(
         @PathVariable("id") id: UUID
     ): String {
-        recipeService.deleteRecipe(id)
+        recipeService.deleteRecipeById(id)
         return "Successfully removed recipe by id: '$id'."
 
         // todo notify that there is no such recipe

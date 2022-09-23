@@ -68,7 +68,7 @@ class RecipeServiceTest {
     fun deleteRecipe() {
         val recipe = Recipe(UUID.randomUUID(),"My recipe 1")
 
-        recipeService.deleteRecipe(recipe.id)
+        recipeService.deleteRecipeById(recipe.id)
 
         val deletedRecipe = mockAdapter.deletedRecipe
 

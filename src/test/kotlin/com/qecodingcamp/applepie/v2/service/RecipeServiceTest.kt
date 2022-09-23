@@ -14,7 +14,7 @@ import java.util.UUID.randomUUID
 
 internal class RecipeServiceTest {
 
-    private val recipeProvider = mockk<RecipeProvider>()
+    private val recipeProvider = mockk<RecipeProvider>(relaxed = true)
     private val recipeService = RecipeService(recipeProvider)
     private val recipeCreationDto = RecipeCreationDto("My Recipe")
     private val recipe = Recipe(randomUUID(), "My Recipe")
@@ -74,5 +74,33 @@ internal class RecipeServiceTest {
         // assert
         verify(exactly = 1) { recipeProvider.findRecipesByName(recipeName)  }
         assertEquals(recipesFound, recipesToReturn)
+    }
+
+    @Test
+    fun findRecipeByIdReturnsRecipe() {
+        // arrange
+        val recipeId = randomUUID()
+        val recipeToReturn = recipe
+
+        every { recipeProvider.findRecipesById(recipeId) } returns recipeToReturn
+
+        // act
+        val recipeFound = recipeService.findRecipesById(recipeId)
+
+        // assert
+        verify(exactly = 1) { recipeProvider.findRecipesById(recipeId)  }
+        assertEquals(recipeFound, recipeToReturn)
+    }
+
+    @Test
+    fun deleteRecipeByIdDeletesRecipe() {
+        // arrange
+        val recipeId = randomUUID()
+
+        // act
+        recipeService.deleteRecipeById(recipeId)
+
+        // assert
+        verify(exactly = 1) { recipeProvider.deleteRecipeById(recipeId)  }
     }
 }
