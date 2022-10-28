@@ -26,11 +26,11 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.rest-assured:rest-assured:5.2.0")
 
-	//implementation("org.springframework.boot:spring-boot-starter-jdbc:2.7.0")
-	//jooqGenerator("org.postgresql:postgresql:42.5.0")
-	//implementation("org.flywaydb:flyway-core:9.3.1")
-	//implementation("org.springframework.boot:spring-boot-starter-jooq:2.7.0")
-	//implementation("org.postgresql:postgresql:42.5.0")
+	implementation("org.springframework.boot:spring-boot-starter-jdbc:2.7.0")
+	jooqGenerator("org.postgresql:postgresql:42.5.0")
+	implementation("org.flywaydb:flyway-core:9.3.1")
+	implementation("org.springframework.boot:spring-boot-starter-jooq:2.7.0")
+	implementation("org.postgresql:postgresql:42.5.0")
 }
 
 tasks.test {
@@ -58,7 +58,7 @@ compileKotlin.kotlinOptions {
 	jvmTarget = "1.8"
 }
 
-/*val jooqJdbcUrl = "jdbc:postgresql://localhost:5432/myDatabaseName"
+val jooqJdbcUrl = "jdbc:postgresql://localhost:5432/myDatabaseName"
 val jooqSchema = "public"
 val jooqUser = "postgres"
 val jooqPassword = "postgres"
@@ -105,4 +105,4 @@ tasks.named("generateJooq").configure {
 		.withPropertyName("migrations")
 		.withPathSensitivity(PathSensitivity.RELATIVE)
 	outputs.cacheIf { true }
-}*/
+}

@@ -5,7 +5,9 @@ import com.qecodingcamp.applepie.domain.Recipe
 import com.qecodingcamp.applepie.domain.RecipeCreationDto
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import io.restassured.RestAssured
+import io.restassured.RestAssured.given
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -26,6 +28,9 @@ class RecipeIntegratedTest {
     @LocalServerPort
     private var port = 0
     private val baseUri = "http://localhost/recipes"
+    private val getRecipesPath = "/find/v1"
+    private val getRecipesByNamePath = "/find/v2"
+    private val getRecipesByIdPath = "/find/v3"
     private val file = File("recipeRepo.csv")
 
     @TestConfiguration
@@ -51,15 +56,15 @@ class RecipeIntegratedTest {
     private val recipe = Recipe(randomUUID(), "My recipe")
 
     @Test
-    fun getAllRecipes() {
+    fun getAllRecipesTest() {
         // Arrange
         val expectedRecipes = listOf(recipe)
         every { recipeProvider.readRecipes() } returns expectedRecipes
 
         // Act
-        RestAssured.given()
+        given()
             .`when`()
-            .get("/find/v1")
+            .get(getRecipesPath)
             .then()
         // Assert
             .statusCode(200)
@@ -68,15 +73,16 @@ class RecipeIntegratedTest {
     }
 
     @Test
-    fun getRecipesByName() {
+    fun getRecipesByNameTest() {
         // Arrange
         val expectedRecipes = listOf(recipe)
         every { recipeProvider.findRecipesByName(recipe.name) } returns expectedRecipes
 
         // Act
-        RestAssured.given()
+        given()
             .`when`()
-            .get("/find/v2?name=${recipe.name}")
+            .queryParam("name", recipe.name)
+            .get(getRecipesByNamePath)
             .then()
         // Assert
             .statusCode(200)
@@ -85,48 +91,75 @@ class RecipeIntegratedTest {
     }
 
     @Test
-    fun getRecipesById() {
+    fun getRecipeByNameErrorTest() {
+        val expectedRecipes = emptyList<Recipe>()
+        every { recipeProvider.findRecipesByName(recipe.name) } returns expectedRecipes
+
+        // Act
+        given()
+            .`when`()
+            .queryParam("name", recipe.name)
+            .get(getRecipesByNamePath)
+            .then()
+            // Assert
+            .statusCode(200)
+            .body(equalTo(expectedRecipes.toString()))
+
+        verify(exactly = 1) { recipeProvider.findRecipesByName(recipe.name) }
+    }
+
+    @Test
+    fun getRecipesByIdTest() {
         // Arrange
         every { recipeProvider.findRecipesById(recipe.id) } returns recipe
 
         // Act
-        RestAssured.given()
+        given()
             .`when`()
-            .get("/find/v3?id=${recipe.id}")
+            .queryParam("id", recipe.id)
+            .get(getRecipesByIdPath)
             .then()
-            // Assert
+        // Assert
             .statusCode(200)
             .body("id", equalTo(recipe.id.toString()))
             .body("name", equalTo(recipe.name))
     }
 
     @Test
-    fun createRecipe() {
+    fun createRecipeTest() {
         // Arrange
         val createdRecipe = RecipeCreationDto(recipe.name)
         every { recipeProvider.createRecipe(createdRecipe) } returns recipe
 
         // Act
-        RestAssured.given()
+        given()
             .`when`()
             .contentType("application/json")
             .body(createdRecipe)
             .post()
+            .peek()
             .then()
+        // Assert
             .statusCode(200)
+            .body(equalTo("\"${recipe.id}\""))
+
+        verify(exactly = 1) {recipeProvider.createRecipe(createdRecipe)}
     }
 
     @Test
-    fun deleteRecipe() {
+    fun deleteRecipeTest() {
         // Arrange
         val createdRecipe = RecipeCreationDto(recipe.name)
         every { recipeProvider.createRecipe(createdRecipe) } returns recipe
 
         // Act
-        RestAssured.given()
+        given()
             .`when`()
-            .delete("/${randomUUID()}")
+            .delete("/${recipe.id}")
             .then()
+        // Assert
             .statusCode(200)
+
+        verify(exactly = 1) {recipeProvider.deleteRecipeById(recipe.id)}
     }
 }
