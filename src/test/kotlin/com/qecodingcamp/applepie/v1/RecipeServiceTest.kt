@@ -64,7 +64,7 @@ class RecipeServiceTest {
         assertTrue(newRecipe == updatedRecipe)
     }*/
 
-    @Test
+    /*@Test
     fun deleteRecipe() {
         val recipe = Recipe(UUID.randomUUID(),"My recipe 1")
 
@@ -73,7 +73,7 @@ class RecipeServiceTest {
         val deletedRecipe = mockAdapter.deletedRecipe
 
         assertTrue(recipe == deletedRecipe)
-    }
+    }*/
 
     @Test
     fun findRecipeByNameReturnsNullIfNoRecipe() {

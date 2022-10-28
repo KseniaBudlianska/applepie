@@ -28,7 +28,7 @@ dependencies {
 
 	implementation("org.springframework.boot:spring-boot-starter-jdbc:2.7.0")
 	jooqGenerator("org.postgresql:postgresql:42.5.0")
-	implementation("org.flywaydb:flyway-core:9.3.1")
+	//implementation("org.flywaydb:flyway-core:9.3.1")
 	implementation("org.springframework.boot:spring-boot-starter-jooq:2.7.0")
 	implementation("org.postgresql:postgresql:42.5.0")
 }
@@ -58,10 +58,10 @@ compileKotlin.kotlinOptions {
 	jvmTarget = "1.8"
 }
 
-val jooqJdbcUrl = "jdbc:postgresql://localhost:5432/myDatabaseName"
+val jooqJdbcUrl = "jdbc:postgresql://localhost:5432/recipes"
 val jooqSchema = "public"
-val jooqUser = "postgres"
-val jooqPassword = "postgres"
+val jooqUser = "ksenia"
+val jooqPassword = "ksenia"
 
 jooq {
 	configurations {
@@ -100,7 +100,7 @@ jooq {
 	}
 }
 tasks.named("generateJooq").configure {
-	dependsOn(tasks.named("flywayMigrate"))
+	//dependsOn(tasks.named("flywayMigrate"))
 	inputs.files(fileTree("src/main/resources/db/migration"))
 		.withPropertyName("migrations")
 		.withPathSensitivity(PathSensitivity.RELATIVE)

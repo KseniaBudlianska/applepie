@@ -3,12 +3,14 @@ package com.qecodingcamp.applepie.config
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import com.qecodingcamp.applepie.adapter.recipe.PostgresAdapter
 import com.qecodingcamp.applepie.adapter.recipe.RecipeCsvAdapter
 import com.qecodingcamp.applepie.adapter.recipe.RecipeProvider
 import com.qecodingcamp.applepie.controller.hello.HelloController
 import com.qecodingcamp.applepie.controller.recipe.RecipeController
 import com.qecodingcamp.applepie.service.RecipeService
 import com.qecodingcamp.applepie.service.hello.HelloService
+import org.jooq.DSLContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.io.File
@@ -42,6 +44,9 @@ open class ApplePieConfig {
         recipeProvider: RecipeProvider
     ) = RecipeService(recipeProvider)
 
-    @Bean
+    //@Bean
     open fun recipeCsvProvider() = RecipeCsvAdapter(File("recipeRepo.csv"))
+
+    @Bean
+    open fun recipePostgresProvider(dsl: DSLContext) = PostgresAdapter(dsl)
 }
