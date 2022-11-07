@@ -28,9 +28,9 @@ class RecipeIntegratedTest {
     @LocalServerPort
     private var port = 0
     private val baseUri = "http://localhost/recipes"
-    private val getRecipesPath = "/find/v1"
-    private val getRecipesByNamePath = "/find/v2"
-    private val getRecipesByIdPath = "/find/v3"
+    private val getRecipesPath = "/find/recipes"
+    private val getRecipesByNamePath = "/find/recipesByName"
+    private val getRecipesByIdPath = "/find/recipeById"
     private val file = File("recipeRepo.csv")
 
     @TestConfiguration

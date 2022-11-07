@@ -10,15 +10,13 @@ import java.util.UUID
 /**
  * Adapter pattern based on Design pattern.
  */
-class PostgresAdapter(private val context: DSLContext) : RecipeProvider {
+class RecipePostgresAdapter(private val context: DSLContext) : RecipeProvider {
 
     override fun createRecipe(recipeCreation: RecipeCreationDto): Recipe {
-        val recipe = Recipe(UUID.randomUUID(), recipeCreation.recipeName)
         val record = context.insertInto(RECIPE)
             .set(
                 mapOf(
-                    RECIPE.ID to recipe.id,
-                    RECIPE.NAME to recipe.name
+                    RECIPE.NAME to recipeCreation.recipeName
                 )
             ).returning().fetchOne()
         val id = record[RECIPE.ID]
@@ -27,7 +25,7 @@ class PostgresAdapter(private val context: DSLContext) : RecipeProvider {
     }
 
     override fun readRecipes(): List<Recipe> {
-        val records = context.select(Tables.RECIPE.asterisk()) // todo switch to *Tables.RECIPE.fields()
+        val records = context.select(Tables.RECIPE.asterisk()) // alternative is: *Tables.RECIPE.fields()
             .from(RECIPE)
             .fetch()
         return records.map { Recipe(it[RECIPE.ID], it[RECIPE.NAME])}
@@ -39,14 +37,15 @@ class PostgresAdapter(private val context: DSLContext) : RecipeProvider {
             .execute()
     }
 
-    // todo what to do if no recipe found?
-
     override fun findRecipesByName(recipeName: String): List<Recipe?> {
-        val records = context.select(Tables.RECIPE.asterisk()) // todo switch to *Tables.RECIPE.fields()
+        val records = context.select(Tables.RECIPE.asterisk())
             .from(RECIPE)
             .where(RECIPE.NAME.eq(recipeName))
             .fetch()
-        return records.map { Recipe(it[RECIPE.ID], it[RECIPE.NAME])}
+
+        return if (records.isNotEmpty) {
+            records.map { Recipe(it[RECIPE.ID], it[RECIPE.NAME])}
+        } else emptyList()
     }
 
     override fun findRecipesById(id: UUID): Recipe? {
@@ -54,8 +53,10 @@ class PostgresAdapter(private val context: DSLContext) : RecipeProvider {
             .from(RECIPE)
             .where(RECIPE.ID.eq(id))
             .fetchOne()
-        val id = record[RECIPE.ID]
-        val name = record[RECIPE.NAME]
-        return Recipe(id, name)
+        return record?.let {
+            val id = record[RECIPE.ID]
+            val name = record[RECIPE.NAME]
+            Recipe(id, name)
+        }
     }
 }

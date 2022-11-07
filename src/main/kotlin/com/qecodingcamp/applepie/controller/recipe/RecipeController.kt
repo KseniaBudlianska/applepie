@@ -19,19 +19,19 @@ class RecipeController(
     private val recipeService: RecipeService
 ) {
 
-    @GetMapping(path = ["/find/v1"])
+    @GetMapping(path = ["/find/recipes"])
     fun getRecipes(): List<Recipe>  {
         return recipeService.readRecipes()
     }
 
-    @GetMapping(path = ["/find/v2"])
+    @GetMapping(path = ["/find/recipesByName"])
     fun getRecipesByName(
         @RequestParam("name") name: String
     ) : List<Recipe?> {
         return recipeService.findRecipeByName(name)
     }
 
-    @GetMapping(path = ["/find/v3"])
+    @GetMapping(path = ["/find/recipeById"])
     fun getRecipeById(
         @RequestParam("id") id: UUID
     ) : Recipe? {

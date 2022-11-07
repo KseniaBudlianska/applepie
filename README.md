@@ -5,9 +5,9 @@ The service handles recipes. Recipe has `id`, `name`, list of `ingredients` (out
 
 ### Implemented Functions
  * Create a new recipe (`/recipes`)
- * Get all recipes (`/recipes/find/v1`)
- * Get recipe by name (`/recipes/find/v2?name={name}`)
- * Get recipe by id (`/recipes/find/v3?id={id}`)
+ * Get all recipes (`/recipes/find/recipes`)
+ * Get recipe by name (`/recipes/find/recipesByName?name={name}`)
+ * Get recipe by id (`/recipes/find/recipeById?id={id}`)
  * Delete recipe by id (`/recipes/{id}`)
  
 ### Storage

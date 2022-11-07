@@ -3,7 +3,7 @@ package com.qecodingcamp.applepie.config
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import com.qecodingcamp.applepie.adapter.recipe.PostgresAdapter
+import com.qecodingcamp.applepie.adapter.recipe.RecipePostgresAdapter
 import com.qecodingcamp.applepie.adapter.recipe.RecipeCsvAdapter
 import com.qecodingcamp.applepie.adapter.recipe.RecipeProvider
 import com.qecodingcamp.applepie.controller.hello.HelloController
@@ -48,5 +48,5 @@ open class ApplePieConfig {
     open fun recipeCsvProvider() = RecipeCsvAdapter(File("recipeRepo.csv"))
 
     @Bean
-    open fun recipePostgresProvider(dsl: DSLContext) = PostgresAdapter(dsl)
+    open fun recipePostgresProvider(context: DSLContext) = RecipePostgresAdapter(context)
 }
