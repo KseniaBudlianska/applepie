@@ -31,6 +31,8 @@ dependencies {
 	//implementation("org.flywaydb:flyway-core:9.3.1")
 	implementation("org.springframework.boot:spring-boot-starter-jooq:2.7.0")
 	implementation("org.postgresql:postgresql:42.5.0")
+	testImplementation("org.testcontainers:postgresql:1.17.5")
+	testImplementation("org.testcontainers:junit-jupiter:1.17.5")
 }
 
 tasks.test {

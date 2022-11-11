@@ -4,17 +4,9 @@ import java.util.UUID
 
 data class Recipe(
     val id: UUID,
-    val name: String,
-    val ingredients: MutableList<Ingredient> = mutableListOf()
+    val name: String
 )
 
 data class RecipeCreationDto(
-    val recipeName: String,
-    val ingredients: MutableList<Ingredient> = mutableListOf()
-)
-
-data class Ingredient(
-    val amount: Double,
-    val name: String,
-    val unit: MeasurementUnit
+    val recipeName: String
 )

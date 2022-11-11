@@ -10,12 +10,6 @@ interface RecipeProvider {
 
     fun readRecipes(): List<Recipe>
 
-    //fun updateRecipe(recipe: Recipe)
-
-    //fun updateRecipe(oldRecipe: Recipe, newRecipe: Recipe)
-
-    //fun deleteRecipe(recipe: Recipe)
-
     fun deleteRecipeById(id: UUID)
 
     fun findRecipesByName(recipeName: String) : List<Recipe?>

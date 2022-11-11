@@ -37,7 +37,6 @@ internal class RecipeCsvAdapterTest {
         val recipes = csvAdapter.readRecipes()
 
         // assert
-        println(recipes)
         assertTrue(recipes.size == 1)
         assertTrue(recipes[0].id == recipeId)
         assertTrue(recipes[0].name == recipeName)
@@ -54,7 +53,6 @@ internal class RecipeCsvAdapterTest {
         val lines = file.readLines()
 
         // assert
-        println(lines)
         assertTrue(lines.size == 1)
         assertTrue(lines[0].split(",")[1] == recipeName)
     }
@@ -69,7 +67,6 @@ internal class RecipeCsvAdapterTest {
         val lines = file.readLines()
 
         // assert
-        println(lines)
         assertTrue(lines.isEmpty())
     }
 
@@ -86,7 +83,6 @@ internal class RecipeCsvAdapterTest {
         val lines = file.readLines()
 
         // assert
-        println(lines)
         assertTrue(lines.size == 1)
         assertTrue(lines[0].split(",")[0] == anotherRecipeId.toString())
     }
@@ -100,7 +96,6 @@ internal class RecipeCsvAdapterTest {
         val recipe = csvAdapter.findRecipesById(recipeId)
 
         // assert
-        println(recipe)
         assertTrue(recipe!!.id == recipeId)
         assertTrue(recipe.name == recipeName)
     }
@@ -114,7 +109,6 @@ internal class RecipeCsvAdapterTest {
         val recipes = csvAdapter.findRecipesByName(recipeName)
 
         // assert
-        println(recipes)
         assertTrue(recipes.first()!!.name == recipeName)
         assertTrue(recipes.first()!!.id == recipeId)
     }
