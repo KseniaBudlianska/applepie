@@ -1,0 +1,32 @@
+version: '3'
+services:
+  applepie:
+    container_name: applepie
+    image: 'applepie-jar:latest'
+    build:
+      context: .
+    links:
+      - db
+  db:
+    container_name: db
+    image: 'postgres:13.1-alpine'
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5438:5432'
+  flyway:
+    container_name: my-flyway
+    environment:
+      - FLYWAY_USER=postgres
+      - FLYWAY_PASSWORD=postgres
+      - FLYWAY_URL=jdbc:postgresql://postgres:5432/recipes
+      - FLYWAY_SCHEMAS=public
+      - FLYWAY_GROUP=true
+    image: flyway/flyway:latest
+    command: -locations=filesystem:/flyway/sql -connectRetries=60 migrate
+    volumes:
+      - $PWD/sql_versions:/flyway/sql
+    depends_on:
+      - db

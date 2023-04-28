@@ -3,8 +3,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/recipes
     username: ksenia
     password: ksenia
-#  flyway:
-#    url: jdbc:postgresql://localhost:5432/recipes
-#    schemas: public
-#    user: ksenia
-#    password: ksenia
+  flyway:
+    url: jdbc:postgresql://localhost:5432/recipes
+    schemas: public
+    user: ksenia
+    password: ksenia

@@ -20,7 +20,9 @@ class RecipeService(
     }
 
     fun deleteRecipeById(id: UUID) {
-        recipeAdapter.deleteRecipeById(id)
+        recipeAdapter.findRecipesById(id)?.let {
+            recipeAdapter.deleteRecipeById(id)
+        } ?: throw Exception("")
     }
 
     fun findRecipeByName(recipe: String) : List<Recipe?> {

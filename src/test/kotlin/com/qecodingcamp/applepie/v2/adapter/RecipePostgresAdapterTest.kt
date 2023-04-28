@@ -108,6 +108,15 @@ internal class RecipePostgresAdapterTest {
     }
 
     @Test
+    fun shouldFindRecipeByIdWhenNoRecipeExist() {
+        // act
+        val recipe = recipeAdapter.findRecipesById(recipeId)
+
+        // assert
+        Assertions.assertTrue(recipe == null)
+    }
+
+    @Test
     fun shouldFindRecipeByName() {
         // arrange
         dsl.insertInto(RECIPE).set(mapOf(RECIPE.NAME to recipeName)).execute()
@@ -117,5 +126,14 @@ internal class RecipePostgresAdapterTest {
 
         // assert
         Assertions.assertTrue(recipes.first()!!.name == recipeName)
+    }
+
+    @Test
+    fun shouldFindRecipeByNameWhenNoRecipeExist() {
+        // act
+        val recipes = recipeAdapter.findRecipesByName(recipeName)
+
+        // assert
+        Assertions.assertTrue(recipes.isEmpty())
     }
 }

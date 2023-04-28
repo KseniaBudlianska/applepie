@@ -19,7 +19,7 @@ class RecipePostgresAdapter(private val context: DSLContext) : RecipeProvider {
                     RECIPE.NAME to recipeCreation.recipeName
                 )
             ).returning().fetchOne()
-        val id = record[RECIPE.ID]
+        val id = record!![RECIPE.ID]
         val name = record[RECIPE.NAME]
         return Recipe(id, name)
     }

@@ -3,6 +3,9 @@ package com.qecodingcamp.applepie.controller.recipe
 import com.qecodingcamp.applepie.domain.Recipe
 import com.qecodingcamp.applepie.domain.RecipeCreationDto
 import com.qecodingcamp.applepie.service.RecipeService
+import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatus.NOT_FOUND
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -34,10 +37,11 @@ class RecipeController(
     @GetMapping(path = ["/find/recipeById"])
     fun getRecipeById(
         @RequestParam("id") id: UUID
-    ) : Recipe? {
-        return recipeService.findRecipesById(id)
-
-        // todo notify that there is no such recipe -> "There is no such recipe with id: '$id'."
+    ) : ResponseEntity<Recipe> {
+        return recipeService.findRecipesById(id)?.let {
+            ResponseEntity.ok(it)
+        } ?: ResponseEntity.status(NOT_FOUND).build()
+        //todo add .body("There is no such recipe with id: '$id'.")
     }
 
     @PostMapping
@@ -51,10 +55,12 @@ class RecipeController(
     @DeleteMapping(path = ["/{id}"])
     fun deleteRecipe(
         @PathVariable("id") id: UUID
-    ): String {
-        recipeService.deleteRecipeById(id)
-        return "Successfully removed recipe by id: '$id'."
-
-        // todo notify that there is no such recipe
+    ) : ResponseEntity<String> {
+        return try {
+            recipeService.deleteRecipeById(id)
+            ResponseEntity.ok("Successfully removed recipe by id: '$id'.")
+        } catch (ex: Exception) {
+            ResponseEntity.status(NOT_FOUND).body("There is no recipe with id: '$id'.")
+        }
     }
 }

@@ -1,0 +1,34 @@
+version: '2'
+
+services:
+  applepie:
+    image: 'applepie-jar:latest'
+    build:
+      context: .
+    container_name: applepie
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/recipes
+      - SPRING_DATASOURCE_USERNAME=ksenia
+      - SPRING_DATASOURCE_PASSWORD=ksenia
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  flyway:
+    image: boxfuse/flyway:5-alpine
+    command: -url=jdbc:postgresql://localhost:5432/recipes -schemas=public -user=ksenia -password=ksenia migrate
+    volumes:
+      - ./migration:/flyway/sql
+    depends_on:
+      db:
+        condition: service_healthy
+
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    environment:
+      - POSTGRES_USER=ksenia
+      - POSTGRES_PASSWORD=ksenia
+    ports:
+      - 5432:5432
